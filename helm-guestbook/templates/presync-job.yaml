@@ -2,17 +2,18 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: hello
-  argocd.argoproj.io/hook: PreSync
-  argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+  annotation: 
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
 spec:
   template:
     spec:
       containers:
       - name: busybox
         image: busybox
-        command: ["/bin/sh", "-c"]
-        args:
-        - |
-          echo "Checking argocd..."
-          sleep 30
+        command:
+          - "/bin/sh"
+          - "-c"
+          - "echo 'Checking argocd...'"
+          - "sleep 30"
       restartPolicy: Never
