@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: j1
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    spec:
+      containers:
+      - name: j1
+        image: busybox
+        command: 
+          - "sh"
+          - "-c"
+          - "echo $player_initial_lives"
+        envFrom:
+        - configMapRef:
+            name: game-demo
+      restartPolicy: Never
+  backoffLimit: 4
